@@ -40,5 +40,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# SUPERBASEの情報
+# SUPABASEの情報
 memo.txt
+database.js
