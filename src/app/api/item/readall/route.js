@@ -1,11 +1,18 @@
-import { NextResponse } from "next/server"
-import supabase from "@/utils/database" 
+import { NextResponse } from "next/server";
+import supabase from "@/utils/database";
 
-export async function GET(){
-    try{
-        const {data} = await supabase.from("items").select()
-        return NextResponse.json({message: "アイテム読み取り成功（オール）", allItems: data})
-    }catch(err){
-        return NextResponse.json({message: `アイテム読み取り失敗（オール）：${err}`})
-    }
+export async function GET() {
+  try {
+    const { data } = await supabase.from("items").select();
+    return NextResponse.json({
+      message: "アイテム読み取り成功（オール）",
+      allItems: data,
+    });
+  } catch (err) {
+    return NextResponse.json({
+      message: `アイテム読み取り失敗（オール）：${err}`,
+    });
+  }
 }
+
+export const revalidate = 0;
