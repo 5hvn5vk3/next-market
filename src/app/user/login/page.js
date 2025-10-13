@@ -1,8 +1,16 @@
 "use client";
 import { useState } from "react";
 const Login = () => {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const [user, setUser] = useState({
+        email: "",
+        password: "",
+    });
+    const handleChange = (e) => {
+        setUser({
+            ...user,
+            [e.target.name]: e.target.value,
+        });
+    };
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -14,10 +22,7 @@ const Login = () => {
                         Accept: "application/json",
                         "Content-Type": "application/json",
                     },
-                    body: JSON.stringify({
-                        email: email,
-                        password: password,
-                    }),
+                    body: JSON.stringify(user),
                 }
             );
             const jsonData = await response.json();
@@ -33,14 +38,14 @@ const Login = () => {
             <form onSubmit={handleSubmit}>
                 <input
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={handleChange}
                     type="text"
                     name="email"
                     placeholder="メールアドレス"
                 />
                 <input
                     value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    onChange={handleChange}
                     type="text"
                     name="password"
                     placeholder="パスワード"
