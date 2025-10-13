@@ -37,14 +37,14 @@ const Login = () => {
             <h1>ログイン</h1>
             <form onSubmit={handleSubmit}>
                 <input
-                    value={email}
+                    value={user.email}
                     onChange={handleChange}
                     type="text"
                     name="email"
                     placeholder="メールアドレス"
                 />
                 <input
-                    value={password}
+                    value={user.password}
                     onChange={handleChange}
                     type="text"
                     name="password"
