@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 export const dynamic = "force-dynamic";
 const getAllItems = async () => {
     const response = await fetch("http://localhost:3000/api/item/readall");
@@ -11,7 +12,7 @@ const ReadAllItems = async () => {
     return (
         <div>
             {allItems.map((item) => (
-                <div key={item.id}>
+                <Link href={`/item/readsingle/${item.id}`} key={item.id}>
                     <Image
                         src={item.image}
                         width={750}
@@ -21,7 +22,7 @@ const ReadAllItems = async () => {
                     <p>{item.price}</p>
                     <p>{item.title}</p>
                     <p>{item.description}</p>
-                </div>
+                </Link>
             ))}
         </div>
     );
