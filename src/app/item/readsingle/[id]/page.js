@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 const getSingleItem = async (id) => {
     const response = await fetch(
         `http://localhost:3000/api/item/readsingle/${id}`
@@ -22,6 +23,10 @@ const ReadSingleItem = async (context) => {
             <p>{singleItem.price}</p>
             <p>{singleItem.title}</p>
             <p>{singleItem.description}</p>
+            <div>
+                <Link href={`/item/update/${singleItem.id}`}>アイテム編集</Link>
+                <Link href={`/item/delete/${singleItem.id}`}>アイテム削除</Link>
+            </div>
         </div>
     );
 };
