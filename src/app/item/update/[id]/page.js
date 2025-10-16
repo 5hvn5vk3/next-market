@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import useAuth from "@/utils/useAuth";
 
 const UpdateItem = (context) => {
     const [title, setTitle] = useState("");
@@ -10,6 +11,7 @@ const UpdateItem = (context) => {
     const [email, setEmail] = useState("");
 
     const router = useRouter();
+    const loginUserEmail = useAuth();
     useEffect(() => {
         const getSingleItem = async () => {
             const params = context.params;
@@ -46,7 +48,7 @@ const UpdateItem = (context) => {
                         price: price,
                         image: image,
                         description: description,
-                        email: "dummy@gmail.com",
+                        email: loginUserEmail,
                     }),
                 }
             );
@@ -57,47 +59,48 @@ const UpdateItem = (context) => {
             alert("アイテム編集失敗");
         }
     };
-
-    return (
-        <div>
-            <h1 className="page-title">アイテム編集</h1>
-            <form onSubmit={handleSubmit}>
-                <input
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                    type="text"
-                    name="title"
-                    placeholder="アイテム名"
-                    required
-                />
-                <input
-                    value={price}
-                    onChange={(e) => setPrice(e.target.value)}
-                    type="text"
-                    name="price"
-                    placeholder="価格"
-                    required
-                />
-                <input
-                    value={image}
-                    onChange={(e) => setImage(e.target.value)}
-                    type="text"
-                    name="image"
-                    placeholder="画像"
-                    required
-                />
-                <textarea
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                    name="description"
-                    rows={15}
-                    placeholder="商品説明"
-                    required
-                ></textarea>
-                <button>編集</button>
-            </form>
-        </div>
-    );
+    if (loginUserEmail === email) {
+        return (
+            <div>
+                <h1 className="page-title">アイテム編集</h1>
+                <form onSubmit={handleSubmit}>
+                    <input
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value)}
+                        type="text"
+                        name="title"
+                        placeholder="アイテム名"
+                        required
+                    />
+                    <input
+                        value={price}
+                        onChange={(e) => setPrice(e.target.value)}
+                        type="text"
+                        name="price"
+                        placeholder="価格"
+                        required
+                    />
+                    <input
+                        value={image}
+                        onChange={(e) => setImage(e.target.value)}
+                        type="text"
+                        name="image"
+                        placeholder="画像"
+                        required
+                    />
+                    <textarea
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
+                        name="description"
+                        rows={15}
+                        placeholder="商品説明"
+                        required
+                    ></textarea>
+                    <button>編集</button>
+                </form>
+            </div>
+        );
+    }
 };
 
 export default UpdateItem;

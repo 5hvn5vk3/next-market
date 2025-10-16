@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import useAuth from "@/utils/useAuth";
 
 const DeleteItem = (context) => {
     const [title, setTitle] = useState("");
@@ -11,6 +12,7 @@ const DeleteItem = (context) => {
     const [email, setEmail] = useState("");
 
     const router = useRouter();
+    const loginUserEmail = useAuth();
     useEffect(() => {
         const getSingleItem = async () => {
             const params = context.params;
@@ -43,7 +45,7 @@ const DeleteItem = (context) => {
                         )}`,
                     },
                     body: JSON.stringify({
-                        email: "dummy@gmail.com",
+                        email: loginUserEmail,
                     }),
                 }
             );
@@ -54,25 +56,26 @@ const DeleteItem = (context) => {
             alert("アイテム削除失敗");
         }
     };
-
-    return (
-        <div>
-            <h1 className="page-title">アイテム削除</h1>
-            <form onSubmit={handleSubmit}>
-                <h2>{title}</h2>
-                <Image
-                    src={image}
-                    width={750}
-                    height={500}
-                    alt="item image"
-                    priority
-                />
-                <h3>¥{price}</h3>
-                <p>{description}</p>
-                <button>削除</button>
-            </form>
-        </div>
-    );
+    if (loginUserEmail === email) {
+        return (
+            <div>
+                <h1 className="page-title">アイテム削除</h1>
+                <form onSubmit={handleSubmit}>
+                    <h2>{title}</h2>
+                    <Image
+                        src={image}
+                        width={750}
+                        height={500}
+                        alt="item image"
+                        priority
+                    />
+                    <h3>¥{price}</h3>
+                    <p>{description}</p>
+                    <button>削除</button>
+                </form>
+            </div>
+        );
+    }
 };
 
 export default DeleteItem;

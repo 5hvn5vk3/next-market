@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import useAuth from "@/utils/useAuth";
 
 export const useItemCreate = () => {
     const [formData, setFormData] = useState({
@@ -11,6 +12,7 @@ export const useItemCreate = () => {
     });
 
     const router = useRouter();
+    const loginUserEmail = useAuth();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -36,7 +38,7 @@ export const useItemCreate = () => {
                         price: formData.price,
                         image: formData.image,
                         description: formData.description,
-                        email: "ダミーデータ",
+                        email: loginUserEmail,
                     }),
                 }
             );
@@ -49,6 +51,7 @@ export const useItemCreate = () => {
     };
     return {
         formData,
+        loginUserEmail,
         handleChange,
         handleSubmit,
     };
