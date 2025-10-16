@@ -1,6 +1,6 @@
 "use client";
 import useAuth from "@/utils/useAuth";
-import useItemUpdate from "@/app/hooks/useItemUpdate";
+import useItemUpdate from "@/hooks/useItemUpdate";
 
 const UpdateItem = (context) => {
     const loginUserEmail = useAuth();
