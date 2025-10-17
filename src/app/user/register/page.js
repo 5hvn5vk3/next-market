@@ -16,7 +16,7 @@ const Register = () => {
         e.preventDefault();
         try {
             const response = await fetch(
-                `${process.env.NEXT_PUBLIC_URL}/api/user/register`,
+                "/api/user/register",
                 {
                     method: "POST",
                     headers: {
