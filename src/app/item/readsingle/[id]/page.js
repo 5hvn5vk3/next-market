@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-const getSingleItem = async (id) => {
+export const getSingleItem = async (id) => {
     const response = await fetch(
         `http://localhost:3000/api/item/readsingle/${id}`
     );
