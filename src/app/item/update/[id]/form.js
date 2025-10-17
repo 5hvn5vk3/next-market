@@ -8,7 +8,7 @@ const UpdateItem = (props) => {
     const loginUserEmail = useAuth();
 
     const handleSubmit = async (formData) => {
-        const params = await context.params;
+        const params = await props.params;
         try {
             const response = await fetch(
                 `${process.env.NEXT_PUBLIC_URL}/api/item/update/${props.params.id}`,
