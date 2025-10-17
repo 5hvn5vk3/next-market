@@ -11,7 +11,7 @@ const UpdateItem = (props) => {
         const params = await context.params;
         try {
             const response = await fetch(
-                `http://localhost:3000/api/item/update/${props.params.id}`,
+                `${process.env.NEXT_PUBLIC_URL}/api/item/update/${props.params.id}`,
                 {
                     method: "PUT",
                     headers: {

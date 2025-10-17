@@ -15,7 +15,7 @@ const Login = () => {
         e.preventDefault();
         try {
             const response = await fetch(
-                "http://localhost:3000/api/user/login",
+                `${process.env.NEXT_PUBLIC_URL}/api/user/login`,
                 {
                     method: "POST",
                     headers: {
