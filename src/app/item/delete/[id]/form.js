@@ -12,7 +12,7 @@ const DeleteItem = (props) => {
         e.preventDefault();
         try {
             const response = await fetch(
-                `${process.env.NEXT_PUBLIC_URL}/api/item/delete/${props.params.id}`,
+                `/api/item/delete/${props.params.id}`,
                 {
                     method: "DELETE",
                     headers: {

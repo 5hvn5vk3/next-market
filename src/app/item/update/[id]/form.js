@@ -11,7 +11,7 @@ const UpdateItem = (props) => {
         const params = await props.params;
         try {
             const response = await fetch(
-                `${process.env.NEXT_PUBLIC_URL}/api/item/update/${props.params.id}`,
+                `/api/item/update/${props.params.id}`,
                 {
                     method: "PUT",
                     headers: {

@@ -1,9 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 export const getSingleItem = async (id) => {
-    const response = await fetch(
-        `${process.env.NEXT_PUBLIC_URL}/api/item/readsingle/${id}`
-    );
+    const baseUrl = process.env.NEXT_PUBLIC_URL || "http://localhost:3000";
+    const response = await fetch(`${baseUrl}/api/item/readsingle/${id}`);
     const jsonData = await response.json();
     const singleItem = jsonData.singleItem;
     return singleItem;
