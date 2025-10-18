@@ -1,63 +1,62 @@
 "use client";
 import { useState } from "react";
+
 const Register = () => {
-    const [newUser, setNewUser] = useState({
-        name: "",
-        email: "",
-        password: "",
-    });
-    const handleChange = (e) => {
-        setNewUser({
-            ...newUser,
-            [e.target.name]: e.target.value,
-        });
-    };
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
             const response = await fetch(
-                "/api/user/register",
+                `${process.env.NEXT_PUBLIC_URL}/api/user/register`,
                 {
                     method: "POST",
                     headers: {
                         Accept: "application/json",
                         "Content-Type": "application/json",
                     },
-                    body: JSON.stringify(newUser),
+                    body: JSON.stringify({
+                        name: name,
+                        email: email,
+                        password: password,
+                    }),
                 }
             );
             const jsonData = await response.json();
             alert(jsonData.message);
-        } catch {
+        } catch (err) {
             alert("ユーザー登録失敗");
         }
     };
+
     return (
         <div>
             <h1 className="page-title">ユーザー登録</h1>
             <form onSubmit={handleSubmit}>
                 <input
-                    value={newUser.name}
-                    onChange={handleChange}
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
                     type="text"
                     name="name"
                     placeholder="名前"
                     required
                 />
                 <input
-                    value={newUser.email}
-                    onChange={handleChange}
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     type="text"
                     name="email"
                     placeholder="メールアドレス"
                     required
                 />
                 <input
-                    value={newUser.password}
-                    onChange={handleChange}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                     type="text"
                     name="password"
-                    placeholder="パスワード"
+                    placeholder="パスワード"
                     required
                 />
                 <button>登録</button>

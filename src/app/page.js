@@ -1,15 +1,17 @@
-import Image from "next/image";
 import Link from "next/link";
+import Image from "next/image";
+
 export const dynamic = "force-dynamic";
+
 const getAllItems = async () => {
-    const baseUrl = process.env.VERCEL_URL
-        ? `https://${process.env.VERCEL_URL}`
-        : "http://localhost:3000";
-    const response = await fetch(`${baseUrl}/api/item/readall`);
+    const response = await fetch(
+        `${process.env.NEXT_PUBLIC_URL}/api/item/readall`
+    );
     const jsonData = await response.json();
     const allItems = jsonData.allItems;
     return allItems;
 };
+
 const ReadAllItems = async () => {
     const allItems = await getAllItems();
     return (
@@ -21,10 +23,13 @@ const ReadAllItems = async () => {
                         width={750}
                         height={500}
                         alt="item-image"
+                        priority
                     />
-                    <p>{item.price}</p>
-                    <p>{item.title}</p>
-                    <p>{item.description}</p>
+                    <div>
+                        <h2>¥{item.price}</h2>
+                        <h3>{item.title}</h3>
+                        <p>{item.description.substring(0, 80)}...</p>
+                    </div>
                 </Link>
             ))}
         </div>
