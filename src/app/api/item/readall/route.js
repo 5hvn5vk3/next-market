@@ -1,13 +1,13 @@
 import { NextResponse } from "next/server";
-import supabase from "../../../utils/database";
+import sql from "../../../utils/database";
 
 export async function GET() {
     try {
-        const { data, error } = await supabase
-            .from("items")
-            .select()
-            .order("created_at", { ascending: true });
-        if (error) throw new Error(error.message);
+        const data = await sql`
+            SELECT *
+            FROM items
+            ORDER BY created_at ASC
+        `;
         return NextResponse.json({
             message: "アイテム読み取り成功（オール）",
             allItems: data,

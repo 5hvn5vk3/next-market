@@ -1,8 +1,9 @@
-import { createClient } from "@supabase/supabase-js"
+import { neon } from "@neondatabase/serverless";
 
-const supabase = createClient(
-    "https://mgmerdrjozkmqdzhxfvh.supabase.co", // ProjectURL
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1nbWVyZHJqb3prbXFkemh4ZnZoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk4ODg4MjMsImV4cCI6MjA3NTQ2NDgyM30.DtwyqAlTxzG5qFLqGigTFOAEzvDKovpxbhxmTnHyLec" // APIKey
-)
+if (!process.env.DATABASE_URL) {
+    throw new Error("DATABASE_URL is not set");
+}
 
-export default supabase
+const sql = neon(process.env.DATABASE_URL);
+
+export default sql;

@@ -1,19 +1,24 @@
 import { NextResponse } from "next/server";
-import supabase from "../../../../utils/database";
+import sql from "../../../../utils/database";
 
 export async function GET(request, context) {
     const params = await context.params;
 
     try {
-        const { data, error } = await supabase
-            .from("items")
-            .select()
-            .eq("id", params.id)
-            .single();
-        if (error) throw new Error(error.message);
+        const data = await sql`
+            SELECT *
+            FROM items
+            WHERE id = ${params.id}
+            LIMIT 1
+        `;
+
+        if (!data.length) {
+            throw new Error("item not found");
+        }
+
         return NextResponse.json({
             message: "アイテム読み取り成功（シングル）",
-            singleItem: data,
+            singleItem: data[0],
         });
     } catch (err) {
         return NextResponse.json({

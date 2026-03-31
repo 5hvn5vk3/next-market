@@ -1,12 +1,20 @@
 import { NextResponse } from "next/server";
-import supabase from "../../../utils/database";
+import sql from "../../../utils/database";
 
 export async function POST(request) {
     const reqBody = await request.json();
 
     try {
-        const { error } = await supabase.from("items").insert(reqBody);
-        if (error) throw new Error(error.message);
+        await sql`
+            INSERT INTO items (title, price, image, description, email)
+            VALUES (
+                ${reqBody.title},
+                ${reqBody.price},
+                ${reqBody.image},
+                ${reqBody.description},
+                ${reqBody.email}
+            )
+        `;
         return NextResponse.json({ message: "アイテム作成成功" });
     } catch (err) {
         return NextResponse.json({ message: `アイテム作成失敗：${err}` });
