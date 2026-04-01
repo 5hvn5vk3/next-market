@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import UserName from "./userName";
 
 const Header = () => {
     return (
@@ -17,6 +18,7 @@ const Header = () => {
             </div>
             <nav>
                 <ul>
+                    <UserName />
                     <li>
                         <Link href="/user/register">登録</Link>
                     </li>
