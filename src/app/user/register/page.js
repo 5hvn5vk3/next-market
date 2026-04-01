@@ -1,12 +1,12 @@
 "use client";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import useLogin from "@/utils/useLogin";
 
 const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const router = useRouter();
+  const { login } = useLogin();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -28,28 +28,7 @@ const Register = () => {
       );
       const jsonData = await registerResponse.json();
       alert(jsonData.message);
-      try {
-        const loginResponse = await fetch(
-          `${process.env.NEXT_PUBLIC_URL}/api/user/login`,
-          {
-            method: "POST",
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              email: email,
-              password: password,
-            }),
-          },
-        );
-        const loginJsonData = await loginResponse.json();
-        localStorage.setItem("token", loginJsonData.token);
-        alert(loginJsonData.message);
-        router.push("/");
-      } catch (err) {
-        alert("ログイン失敗");
-      }
+      await login(email, password);
     } catch (err) {
       alert("ユーザー登録失敗");
     }

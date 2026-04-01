@@ -1,36 +1,15 @@
 "use client";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import useLogin from "@/utils/useLogin";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const router = useRouter();
+  const { login } = useLogin();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_URL}/api/user/login`,
-        {
-          method: "POST",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email: email,
-            password: password,
-          }),
-        },
-      );
-      const jsonData = await response.json();
-      localStorage.setItem("token", jsonData.token);
-      alert(jsonData.message);
-      router.push("/");
-    } catch (err) {
-      alert("ログイン失敗");
-    }
+    await login(email, password);
   };
 
   return (
